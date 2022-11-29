@@ -4,19 +4,16 @@
 	Lab 14
 	myvector.cpp
 */
-
+#include <algorithm>
+#include <string>
 #include "myvector.h"
 
 //////// Constructor
 
-/*
-	MyVector constructor
 
-	takes a size and will intialize the list and the size
-*/
-MyVector::MyVector(int s) {
-	internal_list = new int[s];
-	capacity = s;
+// default constructor inits with no size
+MyVector::MyVector() {
+	_internal_list = new int[0];
 }
 
 /////// private methods
@@ -25,14 +22,34 @@ MyVector::MyVector(int s) {
 	Increases the capacity of the vector by n
 */
 void MyVector::increase_capacity(int n) {
-	int * tmp = new int[n];
+	int * tmp = new int[_size+n];
 
-	for(int i=0;i<internal_list.length;i++) {
-		tmp[i] = n[i];
+	std::copy(_internal_list,_internal_list + _size,tmp);
+
+	delete[] _internal_list;
+	_internal_list = tmp;
+}
+
+/*
+	Decreases the capacity by n
+
+	will throw an error if n > the size of the vec
+*/
+void MyVector::decrease_capacity(int n) {
+
+	if(_size - n < 0) {
+		// if n is greater than the size of size
+		//throw std::invalid_argument("Can't decrease by more than the size of the vector"); 
+		return;
 	}
-	internal_list = tmp;
-	delete tmp;
-	capacity = size + n;
+
+	int * tmp = new int[_size-n];
+
+	std::copy(_internal_list,_internal_list - n,tmp);
+
+	delete[] _internal_list;
+	_internal_list = tmp;
+	_size -= n;
 }
 
 ////// public methods
@@ -42,23 +59,15 @@ void MyVector::increase_capacity(int n) {
 	num of items in vector
 */
 int MyVector::size() {
-	return size;
-}
-
-/*
-	Returns capacity of vector
-*/
-int MyVector::capacity() {
-	return capacity;
+	return _size;
 }
 
 /*
 	Empties the vector
 */
 void MyVector::empty() {
-	size = 0;
-	capacity = 0;
-	delete internal_list;
+	_size = 0;
+	delete[] _internal_list;
 }
 
 /*
@@ -69,20 +78,48 @@ void MyVector::empty() {
 void MyVector::push_back(int n) {
 	increase_capacity(1); // updating internal array and capacity
 
-	internal_list[size] = n;
+	_internal_list[_size] = n;
 	// b/c the last item of the old list is size-1
 	// therefore in this newly expanded one it's size
 
-	size += 1; //updating size
+	_size += 1; //updating size
 }
 
 /*
 	Pop the last item of the vector
 */
-void pop_back(int n) {
-	
+void MyVector::pop_back(int n) {
+	decrease_capacity(n);
+	_size -= n;
 }
 
-void pop_back();
+/*
+	Pops the last item 
+*/
+void MyVector::pop_back() {
+	decrease_capacity(1);
+	_size -= 1;
+}
 
-void clear();
+void MyVector::clear() {
+	delete[] _internal_list;
+	_size = 0;
+}
+
+// debugging methods
+
+/*
+	to_string()
+
+	prints out the items in a vector
+	eg < 1 2 3 4 >
+*/
+std::string MyVector::to_string() {
+	std::string str = "< ";
+
+	for(int i=0; i <_size;i++) {
+		str = str + std::to_string(_internal_list[i]) + " ";
+	}
+
+	return str + ">";
+}

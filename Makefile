@@ -1,22 +1,22 @@
 #Patrick Ging Makefile
 
 
-main: main.o recursion.o
-	g++ -o main -std=c++11 main.o recursion.o
+main: main.o myvector.o
+	g++ -o main -std=c++11 main.o myvector.o
 
-tests: tests.o recursion.o
-	g++ -o tests -std=c++11 tests.o recursion.o
+tests: tests.o myvector.o
+	g++ -o tests -std=c++11 tests.o myvector.o
 
 clean:
 	rm tests main a.out *.o
 
 #.o files
 
-main.o: main.cpp recursion.cpp recursion.h
-	g++ -c -std=c++11 main.cpp recursion.cpp
+main.o: main.cpp myvector.cpp myvector.h
+	g++ -c -std=c++11 main.cpp myvector.cpp
 
-tests.o: tests.cpp recursion.cpp doctest.h recursion.h
-	g++ -c -std=c++11 tests.cpp recursion.cpp
+tests.o: tests.cpp myvector.cpp doctest.h myvector.h
+	g++ -c -std=c++11 tests.cpp myvector.cpp
 
-recursion.o: recursion.cpp recursion.h
-	g++ -c -std=c++11 recursion.cpp
+myvector.o: myvector.cpp myvector.h
+	g++ -c -std=c++11 myvector.cpp

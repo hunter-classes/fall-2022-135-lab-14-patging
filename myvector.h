@@ -15,21 +15,24 @@
 */
 class MyVector {
 	private:
-		int * internal_list; // we will get this list and add new ones
-		int size;
-		int capacity = 0;
+		int * _internal_list; // we will get this list and add new ones
+		int _size = 0;
 
 		void increase_capacity(int n);
+		void decrease_capacity(int n);
 
 	public:
 
-		MyVector(int size);
-		
+		MyVector();
+
 		int size();
-		int capacity();
 		void empty();
 		void push_back(int n);
 		void pop_back(int n);
 		void pop_back();
 		void clear();
-}
+
+		// debugging methods
+
+		std::string to_string();
+};
