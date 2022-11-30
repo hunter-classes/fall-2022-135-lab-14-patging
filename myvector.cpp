@@ -24,10 +24,12 @@ MyVector::MyVector() {
 void MyVector::increase_capacity(int n) {
 	int * tmp = new int[_size+n];
 
-	std::copy(_internal_list,_internal_list + _size,tmp);
+	std::copy_n(_internal_list, _size,tmp);
 
 	delete[] _internal_list;
+	
 	_internal_list = tmp;
+	_size += n;
 }
 
 /*
@@ -45,7 +47,7 @@ void MyVector::decrease_capacity(int n) {
 
 	int * tmp = new int[_size-n];
 
-	std::copy(_internal_list,_internal_list - n,tmp);
+	std::copy_n(_internal_list, _size-n,tmp);
 
 	delete[] _internal_list;
 	_internal_list = tmp;

@@ -9,12 +9,8 @@
 
 int main() {
 	std::cout << "Initializing array" << std::endl;
-	MyVector mv;
+	MyVector mv;	
 	mv.push_back(5);
-	mv.push_back(15);
-	mv.push_back(225);
-	mv.push_back(25);
-	mv.push_back(22);
 
 	std::cout << "Pushing in 5, 15, 225,25,22" << std::endl;
 	std::cout << mv.to_string() << std::endl;
