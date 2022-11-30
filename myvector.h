@@ -32,6 +32,9 @@ class MyVector {
 		void pop_back();
 		void clear();
 
+		//
+		int operator[](int index);
+
 		// debugging methods
 
 		std::string to_string();

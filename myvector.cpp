@@ -4,12 +4,13 @@
 	Lab 14
 	myvector.cpp
 */
+#include <iostream>
 #include <algorithm>
 #include <string>
+
 #include "myvector.h"
 
 //////// Constructor
-
 
 // default constructor inits with no size
 MyVector::MyVector() {
@@ -27,7 +28,7 @@ void MyVector::increase_capacity(int n) {
 	std::copy_n(_internal_list, _size,tmp);
 
 	delete[] _internal_list;
-	
+
 	_internal_list = tmp;
 	_size += n;
 }
@@ -38,7 +39,6 @@ void MyVector::increase_capacity(int n) {
 	will throw an error if n > the size of the vec
 */
 void MyVector::decrease_capacity(int n) {
-
 	if(_size - n < 0) {
 		// if n is greater than the size of size
 		//throw std::invalid_argument("Can't decrease by more than the size of the vector"); 
@@ -46,7 +46,6 @@ void MyVector::decrease_capacity(int n) {
 	}
 
 	int * tmp = new int[_size-n];
-
 	std::copy_n(_internal_list, _size-n,tmp);
 
 	delete[] _internal_list;
@@ -79,12 +78,12 @@ void MyVector::empty() {
 */
 void MyVector::push_back(int n) {
 	increase_capacity(1); // updating internal array and capacity
+	_internal_list[_size-1] = n;
 
-	_internal_list[_size] = n;
 	// b/c the last item of the old list is size-1
 	// therefore in this newly expanded one it's size
 
-	_size += 1; //updating size
+	//_size += 1; //updating size
 }
 
 /*
@@ -92,7 +91,7 @@ void MyVector::push_back(int n) {
 */
 void MyVector::pop_back(int n) {
 	decrease_capacity(n);
-	_size -= n;
+	//_size -= n;
 }
 
 /*
@@ -100,12 +99,18 @@ void MyVector::pop_back(int n) {
 */
 void MyVector::pop_back() {
 	decrease_capacity(1);
-	_size -= 1;
 }
 
 void MyVector::clear() {
 	delete[] _internal_list;
 	_size = 0;
+}
+
+/*
+	[] operator
+*/
+int MyVector::operator[](int index) {
+	return _internal_list[index];
 }
 
 // debugging methods
